@@ -1,12 +1,14 @@
 package com.example.jazdata.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Ingredient {
 
     @Id
@@ -15,6 +17,11 @@ public class Ingredient {
     private String name;
     @ManyToOne
     private Elixir elixir;
+
+    public Ingredient(String name, Elixir elixir) {
+        this.name = name;
+        this.elixir = elixir;
+    }
 
     public UUID getId() {
         return id;

@@ -4,12 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class ElixirInventor {
     @Id
     @GeneratedValue
@@ -18,6 +20,12 @@ public class ElixirInventor {
     private String lastName;
     @ManyToOne
     private Elixir elixir;
+
+    public ElixirInventor(String firstName, String lastName, Elixir elixir) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.elixir = elixir;
+    }
 
     public UUID getId() {
         return id;
