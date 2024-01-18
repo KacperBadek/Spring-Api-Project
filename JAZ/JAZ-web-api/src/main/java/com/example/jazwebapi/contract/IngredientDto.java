@@ -1,0 +1,16 @@
+package com.example.jazwebapi.contract;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.UUID;
+@Getter
+@Setter
+@NoArgsConstructor
+public class IngredientDto {
+
+    private UUID id;
+    private String name;
+
+}
