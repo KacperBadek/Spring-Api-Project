@@ -33,10 +33,10 @@ public class ElixirInventorController {
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping(path = "{elixirId}/add")
-    public ResponseEntity<UUID> saveInventor(@PathVariable UUID elixirId, @RequestBody ElixirInventorDto elixirInventorDto) {
-        elixirInventorService.saveInventor(elixirId, elixirInventorDto);
-        return ResponseEntity.ok(elixirId);
+    @PostMapping(path = "add")
+    public ResponseEntity<UUID> saveInventor(@RequestBody ElixirInventorDto elixirInventorDto) {
+        var id = elixirInventorService.saveInventor(elixirInventorDto);
+        return ResponseEntity.ok(id);
     }
 
     @PutMapping(path = "{id}/update")

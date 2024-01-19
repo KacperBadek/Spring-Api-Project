@@ -47,28 +47,28 @@ public class ElixirService {
         else db.getElixirs().deleteById(id);
     }
 
-    public List<IngredientDto> getElixirIngredientsById(UUID id) {
-        List<Ingredient> ingredientList = db.getIngredients().findAll().stream().filter(ingredient ->
-                ingredient.getElixir().getId().equals(id)).toList();
-
-        return ingredientList.stream().map(ingredient -> {
-            var dto = new IngredientDto();
-            dto.setName(ingredient.getName());
-            return dto;
-        }).toList();
-    }
-
-    public List<ElixirInventorDto> getElixirInventorsById(UUID id) {
-        List<ElixirInventor> inventorList = db.getElixirInventors().findAll().stream().filter(elixirInventor ->
-                elixirInventor.getElixir().getId().equals(id)).toList();
-
-        return inventorList.stream().map(elixirInventor -> {
-            var dto = new ElixirInventorDto();
-            dto.setFirstName(elixirInventor.getFirstName());
-            dto.setLastName(elixirInventor.getLastName());
-            return dto;
-        }).toList();
-    }
+//    public List<IngredientDto> getElixirIngredientsById(UUID id) {
+//        List<Ingredient> ingredientList = db.getIngredients().findAll().stream().filter(ingredient ->
+//                ingredient.getElixir().getId().equals(id)).toList();
+//
+//        return ingredientList.stream().map(ingredient -> {
+//            var dto = new IngredientDto();
+//            dto.setName(ingredient.getName());
+//            return dto;
+//        }).toList();
+//    }
+//
+//    public List<ElixirInventorDto> getElixirInventorsById(UUID id) {
+//        List<ElixirInventor> inventorList = db.getElixirInventors().findAll().stream().filter(elixirInventor ->
+//                elixirInventor.getElixir().getId().equals(id)).toList();
+//
+//        return inventorList.stream().map(elixirInventor -> {
+//            var dto = new ElixirInventorDto();
+//            dto.setFirstName(elixirInventor.getFirstName());
+//            dto.setLastName(elixirInventor.getLastName());
+//            return dto;
+//        }).toList();
+//    }
 
     public UUID saveElixir(ElixirDto dto) {
         var elixir = new Elixir();
@@ -92,6 +92,27 @@ public class ElixirService {
         elixir.setCharacteristics(elixirDto.getCharacteristics());
         elixir.setTime(elixirDto.getTime());
         elixir.setDifficulty(elixirDto.getDifficulty());
+    }
+
+    public void saveIngredientById(UUID elixirId, IngredientDto dto) {
+        var ingredient = new Ingredient();
+        ingredient.setName(dto.getName());
+        ingredient.setElixir(db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!")));
+        db.getIngredients().save(ingredient);
+
+        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!"));
+        elixir.getIngredients().add(ingredient);
+    }
+
+    public void saveInventorById(UUID elixirId, ElixirInventorDto dto) {
+        var inventor = new ElixirInventor();
+        inventor.setFirstName(dto.getFirstName());
+        inventor.setLastName(dto.getLastName());
+        inventor.setElixir(db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!")));
+        db.getElixirInventors().save(inventor);
+
+        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!"));
+        elixir.getInventors().add(inventor);
     }
 
 }

@@ -40,15 +40,11 @@ public class IngredientService {
 
     }
 
-    public UUID saveIngredient(UUID elixirId, IngredientDto dto) {
-
+    public UUID saveIngredient(IngredientDto dto) {
         var ingredient = new Ingredient();
         ingredient.setName(dto.getName());
-        ingredient.setElixir(db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!")));
-        db.getIngredients().save(ingredient);
 
-        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!"));
-        elixir.getIngredients().add(ingredient);
+        db.getIngredients().save(ingredient);
         return ingredient.getId();
     }
 

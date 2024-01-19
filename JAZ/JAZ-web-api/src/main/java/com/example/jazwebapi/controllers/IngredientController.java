@@ -32,10 +32,10 @@ public class IngredientController {
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping(path = "{elixirId}/add")
-    public ResponseEntity<UUID> saveIngredient(@PathVariable UUID elixirId, @RequestBody IngredientDto ingredientDto) {
-        ingredientService.saveIngredient(elixirId, ingredientDto);
-        return ResponseEntity.ok(elixirId);
+    @PostMapping(path = "add")
+    public ResponseEntity<UUID> saveIngredient(@RequestBody IngredientDto ingredientDto) {
+        var id = ingredientService.saveIngredient(ingredientDto);
+        return ResponseEntity.ok(id);
     }
 
     @PutMapping(path = "{id}/update")

@@ -39,15 +39,12 @@ public class ElixirInventorService {
         else db.getElixirInventors().deleteById(id);
     }
 
-    public UUID saveInventor(UUID elixirId, ElixirInventorDto dto) {
+    public UUID saveInventor(ElixirInventorDto dto) {
         var inventor = new ElixirInventor();
         inventor.setFirstName(dto.getFirstName());
         inventor.setLastName(dto.getLastName());
-        inventor.setElixir(db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!")));
-        db.getElixirInventors().save(inventor);
 
-        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!"));
-        elixir.getInventors().add(inventor);
+        db.getElixirInventors().save(inventor);
         return inventor.getId();
     }
 

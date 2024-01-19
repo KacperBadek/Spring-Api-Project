@@ -3,7 +3,9 @@ package com.example.jazwebapi.controllers;
 import com.example.jazwebapi.contract.ElixirDto;
 import com.example.jazwebapi.contract.ElixirInventorDto;
 import com.example.jazwebapi.contract.IngredientDto;
+import com.example.jazwebapi.services.ElixirInventorService;
 import com.example.jazwebapi.services.ElixirService;
+import com.example.jazwebapi.services.IngredientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -46,14 +48,26 @@ public class ElixirController {
         return ResponseEntity.ok(id);
     }
 
-    @GetMapping(path = "{id}/ingredients")
-    public ResponseEntity<List<IngredientDto>> getElixirIngredientsById(@PathVariable UUID id) {
-        return ResponseEntity.ok(elixirService.getElixirIngredientsById(id));
+//    @GetMapping(path = "{id}/ingredients")
+//    public ResponseEntity<List<IngredientDto>> getElixirIngredientsById(@PathVariable UUID id) {
+//        return ResponseEntity.ok(elixirService.getElixirIngredientsById(id));
+//    }
+//
+//    @GetMapping(path = "{id}/inventors")
+//    public ResponseEntity<List<ElixirInventorDto>> getElixirInventorsById(@PathVariable UUID id) {
+//        return ResponseEntity.ok(elixirService.getElixirInventorsById(id));
+//    }
+
+    @PostMapping(path = "{elixirId}/ingredient")
+    public ResponseEntity<UUID> saveIngredientById(@PathVariable UUID elixirId, @RequestBody IngredientDto ingredientDto) {
+        elixirService.saveIngredientById(elixirId, ingredientDto);
+        return ResponseEntity.ok(elixirId);
     }
 
-    @GetMapping(path = "{id}/inventors")
-    public ResponseEntity<List<ElixirInventorDto>> getElixirInventorsById(@PathVariable UUID id) {
-        return ResponseEntity.ok(elixirService.getElixirInventorsById(id));
+    @PostMapping(path = "{elixirId}/inventor")
+    public ResponseEntity<UUID> saveInventorById(@PathVariable UUID elixirId, @RequestBody ElixirInventorDto inventorDto) {
+        elixirService.saveInventorById(elixirId, inventorDto);
+        return ResponseEntity.ok(elixirId);
     }
 
 }
