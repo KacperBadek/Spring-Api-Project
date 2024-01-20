@@ -23,9 +23,9 @@ public class Elixir {
     private String time;
     @Enumerated(EnumType.STRING)
     private ElixirDifficulty difficulty;
-    @OneToMany(mappedBy = "elixir", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "elixirs", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients = new ArrayList<>();
-    @OneToMany(mappedBy = "elixir", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "elixirs", cascade = CascadeType.ALL)
     private List<ElixirInventor> inventors = new ArrayList<>();
     private String manufacturer;
 

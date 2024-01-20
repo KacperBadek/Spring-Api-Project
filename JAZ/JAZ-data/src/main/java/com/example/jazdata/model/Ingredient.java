@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,12 +17,11 @@ public class Ingredient {
     @GeneratedValue
     private UUID id;
     private String name;
-    @ManyToOne
-    private Elixir elixir;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Elixir> elixirs = new ArrayList<>();
 
-    public Ingredient(String name, Elixir elixir) {
+    public Ingredient(String name) {
         this.name = name;
-        this.elixir = elixir;
     }
 
     public UUID getId() {
@@ -39,11 +40,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public Elixir getElixir() {
-        return elixir;
+    public List<Elixir> getElixirs() {
+        return elixirs;
     }
 
-    public void setElixir(Elixir elixir) {
-        this.elixir = elixir;
+    public void setElixirs(List<Elixir> elixirs) {
+        this.elixirs = elixirs;
     }
 }

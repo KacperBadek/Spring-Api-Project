@@ -1,10 +1,10 @@
 package com.example.jazdata.repositories;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class JazDataCatalog implements ICatalogData {
-
     private final ElixirRepository elixirs;
     private final IngredientRepository ingredients;
     private final ElixirInventorRepository inventors;

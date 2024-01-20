@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@Controller()
 @RequestMapping("/api/v1/elixirs")
 @RequiredArgsConstructor
 public class ElixirController {
     private final ElixirService elixirService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<ElixirDto>> getAllElixirs() {
         return ResponseEntity.ok(elixirService.getAllElixirs());
     }
@@ -48,15 +48,15 @@ public class ElixirController {
         return ResponseEntity.ok(id);
     }
 
-//    @GetMapping(path = "{id}/ingredients")
-//    public ResponseEntity<List<IngredientDto>> getElixirIngredientsById(@PathVariable UUID id) {
-//        return ResponseEntity.ok(elixirService.getElixirIngredientsById(id));
-//    }
-//
-//    @GetMapping(path = "{id}/inventors")
-//    public ResponseEntity<List<ElixirInventorDto>> getElixirInventorsById(@PathVariable UUID id) {
-//        return ResponseEntity.ok(elixirService.getElixirInventorsById(id));
-//    }
+    @GetMapping(path = "{id}/ingredients")
+    public ResponseEntity<List<IngredientDto>> getElixirIngredientsById(@PathVariable UUID id) {
+        return ResponseEntity.ok(elixirService.getElixirIngredientsById(id));
+    }
+
+    @GetMapping(path = "{id}/inventors")
+    public ResponseEntity<List<ElixirInventorDto>> getElixirInventorsById(@PathVariable UUID id) {
+        return ResponseEntity.ok(elixirService.getElixirInventorsById(id));
+    }
 
     @PostMapping(path = "{elixirId}/ingredient")
     public ResponseEntity<UUID> saveIngredientById(@PathVariable UUID elixirId, @RequestBody IngredientDto ingredientDto) {
@@ -71,4 +71,3 @@ public class ElixirController {
     }
 
 }
-

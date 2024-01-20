@@ -16,7 +16,7 @@ import java.util.UUID;
 public class IngredientController {
     private final IngredientService ingredientService;
 
-    @GetMapping
+    @GetMapping("all")
     public ResponseEntity<List<IngredientDto>> getAllIngredients() {
         return ResponseEntity.ok(ingredientService.getAllIngredients());
     }

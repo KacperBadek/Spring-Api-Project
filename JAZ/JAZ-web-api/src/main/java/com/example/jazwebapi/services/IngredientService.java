@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +17,7 @@ public class IngredientService {
 
     private IngredientDto getIngredientDto(Ingredient ingredient) {
         IngredientDto dto = new IngredientDto();
+        dto.setId(ingredient.getId());
         dto.setName(ingredient.getName());
 
         return dto;
@@ -41,8 +40,7 @@ public class IngredientService {
     }
 
     public UUID saveIngredient(IngredientDto dto) {
-        var ingredient = new Ingredient();
-        ingredient.setName(dto.getName());
+        var ingredient = new Ingredient(dto.getName());
 
         db.getIngredients().save(ingredient);
         return ingredient.getId();
@@ -52,6 +50,7 @@ public class IngredientService {
         Ingredient ingredient = db.getIngredients().findById(id).orElseThrow(() -> new RuntimeException("Ingredient with this id: " + id + " doesn't exists!"));
 
         ingredient.setName(dto.getName());
+        db.getIngredients().save(ingredient);
     }
 
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
 public class ElixirInventorController {
     private final ElixirInventorService elixirInventorService;
 
-    @GetMapping
+    @GetMapping("all")
     public ResponseEntity<List<ElixirInventorDto>> getAllInventors() {
         return ResponseEntity.ok(elixirInventorService.getAllInventors());
     }
@@ -33,7 +33,7 @@ public class ElixirInventorController {
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping(path = "add")
+    @PostMapping()
     public ResponseEntity<UUID> saveInventor(@RequestBody ElixirInventorDto elixirInventorDto) {
         var id = elixirInventorService.saveInventor(elixirInventorDto);
         return ResponseEntity.ok(id);

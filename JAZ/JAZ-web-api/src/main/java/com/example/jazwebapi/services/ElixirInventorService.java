@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +17,7 @@ public class ElixirInventorService {
 
     private ElixirInventorDto getElixirInventorDto(ElixirInventor elixirInventor) {
         ElixirInventorDto dto = new ElixirInventorDto();
+        dto.setId(elixirInventor.getId());
         dto.setFirstName(elixirInventor.getFirstName());
         dto.setLastName(elixirInventor.getLastName());
         return dto;
@@ -40,9 +39,7 @@ public class ElixirInventorService {
     }
 
     public UUID saveInventor(ElixirInventorDto dto) {
-        var inventor = new ElixirInventor();
-        inventor.setFirstName(dto.getFirstName());
-        inventor.setLastName(dto.getLastName());
+        var inventor = new ElixirInventor(dto.getFirstName(), dto.getLastName());
 
         db.getElixirInventors().save(inventor);
         return inventor.getId();
@@ -53,6 +50,7 @@ public class ElixirInventorService {
 
         inventor.setFirstName(dto.getFirstName());
         inventor.setLastName(dto.getLastName());
+        db.getElixirInventors().save(inventor);
     }
 
 }

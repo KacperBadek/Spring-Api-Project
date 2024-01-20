@@ -1,12 +1,11 @@
 package com.example.jazdata.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,13 +17,12 @@ public class ElixirInventor {
     private UUID id;
     private String firstName;
     private String lastName;
-    @ManyToOne
-    private Elixir elixir;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Elixir> elixirs = new ArrayList<>();
 
-    public ElixirInventor(String firstName, String lastName, Elixir elixir) {
+    public ElixirInventor(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.elixir = elixir;
     }
 
     public UUID getId() {
@@ -51,11 +49,11 @@ public class ElixirInventor {
         this.lastName = lastName;
     }
 
-    public Elixir getElixir() {
-        return elixir;
+    public List<Elixir> getElixirs() {
+        return elixirs;
     }
 
-    public void setElixir(Elixir elixir) {
-        this.elixir = elixir;
+    public void setElixirs(List<Elixir> elixirs) {
+        this.elixirs = elixirs;
     }
 }
