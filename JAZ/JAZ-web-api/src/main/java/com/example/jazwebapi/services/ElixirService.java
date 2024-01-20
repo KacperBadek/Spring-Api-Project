@@ -9,7 +9,9 @@ import com.example.jazwebapi.contract.ElixirInventorDto;
 import com.example.jazwebapi.contract.IngredientDto;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,13 +40,13 @@ public class ElixirService {
     }
 
     public ElixirDto getElixirById(UUID id) {
-        return db.getElixirs().findById(id).map(this::getElixirDto).orElseThrow(() -> new RuntimeException("Elixir with this id: " + id + " doesn't exists!"));
+        return db.getElixirs().findById(id).map(this::getElixirDto).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Elixir with this id: " + id + " doesn't exists!"));
     }
 
     public void deleteElixirById(UUID id) {
         Optional<Elixir> elixir = db.getElixirs().findById(id);
 
-        if (elixir.isEmpty()) throw new RuntimeException("Elixir with this id: " + id + " doesn't exists!");
+        if (elixir.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Elixir with this id: " + id + " doesn't exists!");
         else db.getElixirs().deleteById(id);
     }
 
@@ -61,7 +63,7 @@ public class ElixirService {
                 return dto;
             }).toList();
         } else {
-            throw new EntityNotFoundException("Elixir with ID " + id + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Elixir with this id: " + id + " doesn't exists!");
         }
     }
 
@@ -89,11 +91,16 @@ public class ElixirService {
             }).toList();
 
         } else {
-            throw new EntityNotFoundException("Elixir with ID " + id + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Elixir with this id: " + id + " doesn't exists!");
         }
     }
 
     public UUID saveElixir(ElixirDto dto) {
+
+        Optional<Elixir> check = db.getElixirs().findByName(dto.getName());
+
+        if(check.isPresent()) throw new ResponseStatusException(HttpStatus.CONFLICT, "Elixir with this name: " +dto.getName() + " already exists!");
+
         var elixir = new Elixir();
         elixir.setName(dto.getName());
         elixir.setEffect(dto.getEffect());
@@ -120,7 +127,7 @@ public class ElixirService {
 
     public void saveIngredientById(UUID elixirId, IngredientDto dto) {
         var ingredient = new Ingredient(dto.getName());
-        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!"));
+        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Elixir with this id: " + elixirId + " doesn't exists!"));
 
         elixir.getIngredients().add(ingredient);
         ingredient.getElixirs().add(elixir);
@@ -130,7 +137,7 @@ public class ElixirService {
 
     public void saveInventorById(UUID elixirId, ElixirInventorDto dto) {
         var inventor = new ElixirInventor(dto.getFirstName(), dto.getLastName());
-        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new RuntimeException("Elixir with this id: " + elixirId + " doesn't exists!"));
+        var elixir = db.getElixirs().findById(elixirId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Elixir with this id: " + elixirId + " doesn't exists!"));
 
         elixir.getInventors().add(inventor);
         inventor.getElixirs().add(elixir);

@@ -4,7 +4,9 @@ import com.example.jazdata.model.Ingredient;
 import com.example.jazdata.repositories.ICatalogData;
 import com.example.jazwebapi.contract.IngredientDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,18 +30,21 @@ public class IngredientService {
     }
 
     public IngredientDto getIngredientById(UUID id) {
-        return db.getIngredients().findById(id).map(this::getIngredientDto).orElseThrow(() -> new RuntimeException("Ingredient with this id: " + id + " doesn't exists!"));
+        return db.getIngredients().findById(id).map(this::getIngredientDto).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient with this id: " + id + " doesn't exists!"));
     }
 
     public void deleteIngredientById(UUID id) {
         Optional<Ingredient> ingredient = db.getIngredients().findById(id);
 
-        if (ingredient.isEmpty()) throw new RuntimeException("Ingredient with this id: " + id + " doesn't exists!");
+        if (ingredient.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient with this id: " + id + " doesn't exists!");
         else db.getIngredients().deleteById(id);
 
     }
 
     public UUID saveIngredient(IngredientDto dto) {
+        Optional<Ingredient> check = db.getIngredients().findByName(dto.getName());
+        if(check.isPresent()) throw new ResponseStatusException(HttpStatus.CONFLICT, "Ingredient with this name: " + dto.getName() + " already exists!");
+
         var ingredient = new Ingredient(dto.getName());
 
         db.getIngredients().save(ingredient);
@@ -47,7 +52,7 @@ public class IngredientService {
     }
 
     public void updateIngredient(UUID id, IngredientDto dto) {
-        Ingredient ingredient = db.getIngredients().findById(id).orElseThrow(() -> new RuntimeException("Ingredient with this id: " + id + " doesn't exists!"));
+        Ingredient ingredient = db.getIngredients().findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient with this id: " + id + " doesn't exists!"));
 
         ingredient.setName(dto.getName());
         db.getIngredients().save(ingredient);
