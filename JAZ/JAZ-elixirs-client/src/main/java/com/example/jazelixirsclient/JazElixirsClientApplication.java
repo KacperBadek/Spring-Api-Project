@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
-@EnableJpaRepositories
 public class JazElixirsClientApplication implements CommandLineRunner {
 
     IElixirsClient client;
