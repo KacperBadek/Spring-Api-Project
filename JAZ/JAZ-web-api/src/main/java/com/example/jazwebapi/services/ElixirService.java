@@ -59,6 +59,7 @@ public class ElixirService {
 
             return ingredientList.stream().map(ingredient -> {
                 var dto = new IngredientDto();
+                dto.setId(ingredient.getId());
                 dto.setName(ingredient.getName());
                 return dto;
             }).toList();
@@ -66,15 +67,6 @@ public class ElixirService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Elixir with this id: " + id + " doesn't exists!");
         }
     }
-
-    //        List<Ingredient> ingredientList = db.getIngredients().findAll().stream().filter(ingredient ->
-//                ingredient.getElixir().getId().equals(id)).toList();
-//
-//        return ingredientList.stream().map(ingredient -> {
-//            var dto = new IngredientDto();
-//            dto.setName(ingredient.getName());
-//            return dto;
-//        }).toList();
 
     public List<ElixirInventorDto> getElixirInventorsById(UUID id) {
         Optional<Elixir> elixirOptional = db.getElixirs().findById(id);
@@ -85,6 +77,7 @@ public class ElixirService {
 
             return inventorList.stream().map(inventor -> {
                 var dto = new ElixirInventorDto();
+                dto.setId(inventor.getId());
                 dto.setFirstName(inventor.getFirstName());
                 dto.setLastName(inventor.getLastName());
                 return dto;

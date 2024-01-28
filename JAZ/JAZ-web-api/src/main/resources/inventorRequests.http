@@ -1,0 +1,26 @@
+###
+GET http://localhost:8080/api/v1/inventors/all
+
+###
+GET http://localhost:8080/api/v1/inventors/6aaa7169-69ba-4d40-b510-11d6126b7dc7
+
+###
+DELETE http://localhost:8080/api/v1/inventors/6aaa7169-69ba-4d40-b510-11d6126b7dc7
+
+###
+POST http://localhost:8080/api/v1/inventors
+Content-Type: application/json
+
+{
+  "firstName": "Bartosz",
+  "lastName": "Bohatyrewicz"
+}
+
+###
+PUT http://localhost:8080/api/v1/inventors/6aaa7169-69ba-4d40-b510-11d6126b7dc7
+Content-Type: application/json
+
+{
+  "firstName": "Bartosz",
+  "lastName": "B"
+}

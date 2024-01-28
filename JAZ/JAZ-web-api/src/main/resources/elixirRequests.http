@@ -1,0 +1,57 @@
+###
+GET http://localhost:8080/api/v1/elixirs/all
+
+###
+GET http://localhost:8080/api/v1/elixirs/28ef05bc-1e25-457b-be04-aa267abf19d3
+
+###
+DELETE http://localhost:8080/api/v1/elixirs/c20682ab-22ee-4c2a-a642-089a43f68e19
+
+###
+POST http://localhost:8080/api/v1/elixirs
+Content-Type: application/json
+
+{
+  "name": "Philosopher's Stone Elixir",
+  "effect": "Grants immortality",
+  "sideEffects": "None",
+  "characteristics": "Magical",
+  "time": "Unknown",
+  "difficulty": "Advanced"
+}
+
+###
+PUT http://localhost:8080/api/v1/elixirs/28ef05bc-1e25-457b-be04-aa267abf19d3
+Content-Type: application/json
+
+{
+  "name": "Among us potion",
+  "effect": "Sus",
+  "sideEffects": "None",
+  "characteristics": "Magical",
+  "time": "Unknown",
+  "difficulty": "Advanced"
+}
+
+###
+GET http://localhost:8080/api/v1/elixirs/d69c6069-4aa0-4f58-9c17-5f80b5117440/ingredients
+
+###
+GET http://localhost:8080/api/v1/elixirs/d69c6069-4aa0-4f58-9c17-5f80b5117440/inventors
+
+###
+POST http://localhost:8080/api/v1/elixirs/d69c6069-4aa0-4f58-9c17-5f80b5117440/ingredient
+Content-Type: application/json
+
+{
+  "name": "Duck"
+}
+
+###
+POST http://localhost:8080/api/v1/elixirs/d69c6069-4aa0-4f58-9c17-5f80b5117440/inventor
+Content-Type: application/json
+
+{
+  "firstName": "Adam",
+  "lastName": "Bez"
+}

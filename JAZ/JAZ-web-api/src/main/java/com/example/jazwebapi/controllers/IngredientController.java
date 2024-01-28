@@ -32,13 +32,13 @@ public class IngredientController {
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping(path = "add")
+    @PostMapping
     public ResponseEntity<UUID> saveIngredient(@RequestBody IngredientDto ingredientDto) {
         var id = ingredientService.saveIngredient(ingredientDto);
         return ResponseEntity.ok(id);
     }
 
-    @PutMapping(path = "{id}/update")
+    @PutMapping(path = "{id}")
     public ResponseEntity<UUID> updateIngredient(@PathVariable UUID id, @RequestBody IngredientDto ingredientDto) {
         ingredientService.updateIngredient(id, ingredientDto);
         return ResponseEntity.ok(id);

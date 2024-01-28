@@ -39,7 +39,7 @@ public class ElixirInventorController {
         return ResponseEntity.ok(id);
     }
 
-    @PutMapping(path = "{id}/update")
+    @PutMapping(path = "{id}")
     public ResponseEntity<UUID> updateInventor(@PathVariable UUID id, @RequestBody ElixirInventorDto elixirInventorDto) {
         elixirInventorService.updateInventor(id, elixirInventorDto);
         return ResponseEntity.ok(id);
